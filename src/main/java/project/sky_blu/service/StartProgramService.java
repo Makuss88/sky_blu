@@ -19,11 +19,11 @@ public class StartProgramService {
 
         airPort.add(new City("KRK","Kraków"));
         airPort.add(new City("BRI", "Bari"));
-        airPort.add(new City("KAT","Katowice"));
+        airPort.add(new City("KTW","Katowice"));
         airPort.add(new City("WAW", "Warszawa"));
         airPort.add(new City("VIE","Vienna"));
         airPort.add(new City("PSA","Piza"));
-        airPort.add(new City("DBA", "Dublin"));
+        airPort.add(new City("DUB", "Dublin"));
 
         cityRepository.saveAll(airPort);
     }

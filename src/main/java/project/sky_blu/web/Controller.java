@@ -3,8 +3,11 @@ package project.sky_blu.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import project.sky_blu.domain.City;
 import project.sky_blu.persistance.CityRepository;
+import project.sky_blu.service.FlyInformation;
 import project.sky_blu.service.RyanairService;
 import project.sky_blu.service.StartProgramService;
 
@@ -23,7 +26,6 @@ public class Controller {
     private StartProgramService startProgramService;
 
 
-
     @Autowired
     private CityRepository cityRepository;
 
@@ -34,7 +36,6 @@ public class Controller {
         startProgramService.addCityIntoDB();
 
     }
-
 
 
     @GetMapping(value = "/go")
@@ -51,18 +52,22 @@ public class Controller {
         for (int i = 0; i < result.size(); i++) {
             airport.add(result.get(i).getOfficialName());
         }
-
-        model.addAttribute("airport",airport);
+        model.addAttribute("flyInformation", new FlyInformation());
+        model.addAttribute("airport", airport);
         return "/index";
 
     }
 
-    @GetMapping(value = "/search")
-    public String search(Model model) {
+    @PostMapping(value = "/search")
+    public String search(@ModelAttribute("flyInformation") FlyInformation flyInformation, Model model) {
 
-        String from = "KRK";
-        String to = "BRI";
-        String dateStart = "2019-04-20";
+
+        List<City> cityFrom = cityRepository.findAllByOfficialName(flyInformation.getFrom());
+        List<City> cityTo = cityRepository.findAllByOfficialName(flyInformation.getTo());
+
+        String from = cityFrom.get(0).getFlyName();
+        String to = cityTo.get(0).getFlyName();
+        String dateStart = flyInformation.getDateStart();
 
         String ryanairURL = ryanairService.parseURL(from, to, dateStart);
 

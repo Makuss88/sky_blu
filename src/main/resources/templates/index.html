@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Alladin</title>
@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
-    <!--<script type="text/javascript" th:src="@{/js/autocomplete.js}" defer></script>-->
-
 </head>
 <body>
 
@@ -18,31 +16,30 @@
     <div class="row">
         <div class="col-md-12">
             <div class="jumbotron card card-block">
-                <h2>
-                    Skąd chcesz lecieć??
-                </h2>
+                <h1>
+                    <form th:action="@{/search}" th:object="${flyInformation}" method="POST">
 
-                <!--Make sure the form has the autocomplete function switched off:-->
+                        From:
+                        <div class="autocomplete" style="width:300px;">
+                            <input type="text" th:field="*{from}"/>
+                        </div>
+                        <br/>
 
-                <!--TODO na potem-->
+                        To:
+                        <div class="autocomplete" style="width:300px;">
+                            <input type="text" th:field="*{to}"/>
+                        </div>
 
-                    <div class="autocomplete" style="width:300px;">
-                        <input id="from" type="text" name="myCountry" placeholder="From">
-                    </div>
+                        <br/>
 
+                        Start Your travel:
+                        <input type="date" th:field="*{dateStart}"/>
 
-                    <div class="autocomplete" style="width:300px;">
-                        <input id="to" type="text" name="myCountry" placeholder="To">
-                    </div>
-
-                <form action="#" th:action="@{/search}">
-                    <button type="submit" class="btn btn-danger" th:action="sumbit">SAIL!</button>
-                </form>
-
-                <br/>
-                in this moment - Start to KRK, meta to BRI, 2019-04-20, 1 osoba dorosła
-
-
+                        <div class="form-group" style="width: 60%">
+                            <button th:action="submit" class="btn btn-success">SAIL!</button>
+                        </div>
+                    </form>
+                </h1>
             </div>
         </div>
     </div>
@@ -154,11 +151,11 @@
 
     /*An array containing all the country names in the world:*/
 
-    var countries = [[${airport}]];
+    var airport = [[${airport}]];
 
     /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-    autocomplete(document.getElementById("from"), countries);
-    autocomplete(document.getElementById("to"), countries);
+    autocomplete(document.getElementById("from"), airport);
+    autocomplete(document.getElementById("to"), airport);
 
 </script>
 

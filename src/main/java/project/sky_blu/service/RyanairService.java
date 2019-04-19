@@ -55,6 +55,10 @@ public class RyanairService {
             int startPrice = result.get(0).indexOf("amount") + 8; //get +8 bc. "amount:/" chas 8 character to start substring
             int endPrice = result.get(0).indexOf("count") - 4; //get -4, when Admin get good price, (sht price has 11,9900 and example 1234,9900 - we make when this substring ends)
 
+            if(endPrice<startPrice){
+                return "BŁĄD CIECIU!";
+            }
+
             price = result.get(0).substring(startPrice, endPrice);
 
         } catch (MalformedURLException e1) {
