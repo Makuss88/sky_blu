@@ -5,12 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import project.sky_blu.service.RyanairService;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.PostConstruct;
+
 
 @org.springframework.stereotype.Controller
 public class Controller {
@@ -18,21 +14,33 @@ public class Controller {
     @Autowired
     private RyanairService ryanairService;
 
+
+
+    @PostConstruct
+    public void initializer(){
+
+
+
+    }
+
+
     @GetMapping(value = "/go")
     public String index() {
         return "/index";
     }
+
+
 
     @GetMapping(value = "/")
     public String go(Model model) {
 
         String[] fly = new String[10];
 
-        fly[0] = ("Warszawa Okęcie");
-        fly[1] = ("Warszawa Modlin");
-        fly[2] = ("Wrocław");
-        fly[3] = ("Poznań");
-        fly[4] = ("Kraków");
+        fly[0] = ("Kraków");
+        fly[1] = ("Bari");
+        fly[2] = ("Vienna");
+        fly[3] = ("Piza");
+        fly[4] = ("Katowice");
         fly[5] = ("Katowice");
         fly[6] = ("Gdańsk");
         fly[7] = ("Łódź");
