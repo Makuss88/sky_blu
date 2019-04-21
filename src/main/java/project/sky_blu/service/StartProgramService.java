@@ -15,6 +15,7 @@ public class StartProgramService {
 
     @Autowired
     private CityRepository cityRepository;
+
     public void addCityIntoDB() {
 
         airPort.add(new City("KRK","Kraków"));

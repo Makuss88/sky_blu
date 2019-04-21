@@ -25,10 +25,8 @@ public class Controller {
     @Autowired
     private StartProgramService startProgramService;
 
-
     @Autowired
     private CityRepository cityRepository;
-
 
     @PostConstruct
     public void initializer() {
@@ -61,20 +59,17 @@ public class Controller {
     @PostMapping(value = "/search")
     public String search(@ModelAttribute("flyInformation") FlyInformation flyInformation, Model model) {
 
-
-        List<City> cityFrom = cityRepository.findAllByOfficialName(flyInformation.getFrom());
-        List<City> cityTo = cityRepository.findAllByOfficialName(flyInformation.getTo());
-
-        String from = cityFrom.get(0).getFlyName();
-        String to = cityTo.get(0).getFlyName();
+        String from = flyInformation.getFrom();
+        String to = flyInformation.getTo();
         String dateStart = flyInformation.getDateStart();
 
         String ryanairURL = ryanairService.parseURL(from, to, dateStart);
 
-        String price = ryanairService.getPrice(ryanairURL);
+        ryanairService.getPriceAndData(ryanairURL);
 
-        model.addAttribute("price", price);
-        model.addAttribute("date", dateStart);
+
+        model.addAttribute("price", ryanairService.getPrices());
+        model.addAttribute("date", ryanairService.getDates());
 
         return "/search";
     }
